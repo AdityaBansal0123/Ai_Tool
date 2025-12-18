@@ -9,11 +9,11 @@ Run the image:
 
 Bash
 
-docker run -p 5000:5000 yourusername/ai-learning-tool:latest
+docker run -p 5000:5000 adityabansal480/ai-learning-tool:latest
 Access the app: Open your browser to http://localhost:5000.
 
 Option 2: Manual Development Setup
-Clone the repo: git clone <your-repo-link>
+Clone the repo: git clone https://github.com/AdityaBansal0123/Ai_Tool.git
 
 Install dependencies: pip install -r requirements.txt
 
