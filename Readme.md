@@ -63,3 +63,32 @@ Stress Test: I verified the model by processing a 10 million-row dataset, confir
 Reproducibility: I verified the Docker Hub image by deleting all local images and performing a clean docker pull from the registry to ensure it runs on any machine.
 
 Independent Logic: I independently defined the business logic for "High Risk" thresholds (Score < 50 or Time < 15 mins) and designed the project's modular directory structure (separating src, templates, and models).
+
+
+SAMPLE_INPUT:-
+student_id,quiz_score,time_spent_minutes,chapter_order
+S001,85,45,1
+S002,12,58,1
+S003,92,60,2
+S004,35,21,2
+S005,48,12,3
+S006,77,40,3
+S007,18,51,4
+S008,95,55,4
+S009,5,47,5
+S010,42,14,5
+
+SAMPLE__OUTPUT:-
+
+Student Risk Analysis:-
+Student ID,Quiz Score,Time (Min),Completion Prob.,Risk Level
+S009,5,47,8.2%,🔴 High Risk
+S002,12,58,14.5%,🔴 High Risk
+S005,48,12,32.1%,🔴 High Risk
+S001,85,45,94.8%,🟢 Safe
+
+Course Difficulty Ranking:-
+Chapter,Avg. Score,Difficulty Rating,Status
+Chapter 5,23.5,76.5,⚠️ High Difficulty (Bottleneck)
+Chapter 1,48.5,51.5,Moderate
+Chapter 4,56.5,43.5,Balanced
