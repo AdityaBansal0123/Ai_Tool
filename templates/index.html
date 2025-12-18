@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Learning Intelligence Tool</title>
+</head>
+<body>
+
+    <h1>AI Learning Intelligence Tool</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li style="color: red;">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <div style="border: 1px solid black; padding: 20px; margin-bottom: 20px;">
+        <form method="post" enctype="multipart/form-data">
+            <p>Upload Student CSV Data:</p>
+            <input type="file" name="file" accept=".csv" required>
+            <br><br>
+            <button type="submit">Analyze Data</button>
+        </form>
+    </div>
+
+    {% if results %}
+        <hr>
+        <h2>Analysis Results</h2>
+        
+        <p><strong>Predicted Completion Rate:</strong> {{ results.completion_rate }}%</p>
+        <p><strong>High Risk Students:</strong> {{ results.high_risk_count }}</p>
+        <p><strong>Total Students:</strong> {{ results.total_students }}</p>
+
+        <hr>
+
+        <h3>At-Risk Students</h3>
+        <table border="1" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Quiz Score</th>
+                    <th>Time Spent (min)</th>
+                    <th>Completion Probability</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in results.risk_table %}
+                <tr>
+                    <td>{{ row['student_id'] }}</td>
+                    <td>{{ row['quiz_score'] }}</td>
+                    <td>{{ row['time_spent_minutes']|round(1) }}</td>
+                    <td>{{ (row['completion_probability'] * 100)|round(1) }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <br>
+
+        <h3>Chapter Difficulty Analysis</h3>
+        <table border="1" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>Chapter Order</th>
+                    <th>Average Score</th>
+                    <th>Difficulty Rating (0-100)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in results.diff_table %}
+                <tr>
+                    <td>Chapter {{ row['chapter_order'] }}</td>
+                    <td>{{ row['quiz_score']|round(1) }}</td>
+                    <td>{{ row['difficulty_score']|round(1) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
+
+</body>
+</html>
